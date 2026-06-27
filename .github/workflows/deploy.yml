@@ -1,9 +1,9 @@
-name: Deploy Hugo to IPv6 Server
+name: Deploy Hugo to MyServer
 
 on:
   push:
     branches:
-      - master # 当你推送到 master 分支时触发
+      - master
 
 jobs:
   deploy:
@@ -31,15 +31,15 @@ jobs:
         run: |
           hugo -d public
 
-      # 将编译好的静态文件通过 rsync 传输到你的 IPv6 服务器
-      - name: Deploy via rsync
-        uses: AEnterprise/rsync-deploy@v1.0
-        env:
-          DEPLOY_KEY: ${{ secrets.SERVER_SSH_KEY }}
-          ARGS: "-avz --delete"
-          SERVER_PORT: "22"
-          SERVER_IP: "2406:da18:e66:d766:7483:b8c1:f8ea:c279"
-          USERNAME: ${{ secrets.SERVER_USERNAME }}
-          FOLDER: "./public/"
-          SERVER_DESTINATION: ${{ secrets.WEB_ROOT }}
+      # 将编译好的静态文件通过基于 Go 语言的现代组件传输到你的 IPv6 服务器
+      - name: Deploy via SSH/SCP
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: "2406:da18:e66:d766:7483:b8c1:f8ea:c279"
+          username: ${{ secrets.SERVER_USERNAME }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          port: 22
+          source: "public/*"
+          target: ${{ secrets.WEB_ROOT }}
+          strip_components: 0
 
