@@ -46,5 +46,5 @@ jobs:
           ssh-keyscan -6 -H "$SERVER_HOST" >> ~/.ssh/known_hosts
           
           # 原生的 scp 在指定 IPv6 时，目标地址的方括号要加在用户和主机外面，形如 [user@host]:dir
-          scp -6 -v -i ~/.ssh/id_ed25519 -r public/* ${SERVER_USER}@[${SERVER_HOST}]:${TARGET_DIR}"
+          scp -6 -i ~/.ssh/id_ed25519 -r public/* "${SERVER_USER}@[${SERVER_HOST}]:${TARGET_DIR}"
 
