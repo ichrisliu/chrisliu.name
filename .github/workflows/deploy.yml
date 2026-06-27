@@ -1,0 +1,45 @@
+name: Deploy Hugo to IPv6 Server
+
+on:
+  push:
+    branches:
+      - master # 当你推送到 master 分支时触发
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          submodules: 'recursive' # 自动拉取 Git 子模块（如果有的话）
+
+      # 🔥 解决纯 IPv6 无法连接的关键：在 GitHub 宿主机上套一层 Cloudflare WARP 隧道
+      - name: Set up Cloudflare WARP (Enable IPv6)
+        uses: fscarmen/warp-on-actions@v1.1
+        with:
+          stack: dual # 开启双栈，让 GitHub Actions 获得访问 IPv6 的能力
+
+      # 安装 Hugo 环境
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: 'latest'
+
+      # 执行 Hugo 编译，生成 public 静态文件夹
+      - name: Build Hugo Site
+        run: |
+          hugo -d public
+
+      # 将编译好的静态文件通过 rsync 传输到你的 IPv6 服务器
+      - name: Deploy via rsync
+        uses: AEnterprise/rsync-deploy@v1.0
+        env:
+          DEPLOY_KEY: ${{ secrets.SERVER_SSH_KEY }}
+          ARGS: "-avz --delete"
+          SERVER_PORT: "22"
+          SERVER_IP: "2406:da18:e66:d766:7483:b8c1:f8ea:c279"
+          USERNAME: ${{ SERVER_USERNAME }}
+          FOLDER: "./public/"
+          SERVER_DESTINATION: ${{ WEB_ROOT }}
+
