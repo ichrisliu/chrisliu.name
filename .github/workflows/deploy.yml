@@ -39,7 +39,7 @@ jobs:
           ARGS: "-avz --delete"
           SERVER_PORT: "22"
           SERVER_IP: "2406:da18:e66:d766:7483:b8c1:f8ea:c279"
-          USERNAME: ${{ SERVER_USERNAME }}
+          USERNAME: ${{ secrets.SERVER_USERNAME }}
           FOLDER: "./public/"
-          SERVER_DESTINATION: ${{ WEB_ROOT }}
+          SERVER_DESTINATION: ${{ secrets.WEB_ROOT }}
 
