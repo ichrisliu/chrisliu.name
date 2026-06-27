@@ -31,15 +31,20 @@ jobs:
         run: |
           hugo -d public
 
-      # 将编译好的静态文件通过基于 Go 语言的现代组件传输到你的 IPv6 服务器
-      - name: Deploy via SSH/SCP
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: "[2406:da18:e66:d766:7483:b8c1:f8ea:c279]"
-          username: ${{ secrets.SERVER_USERNAME }}
-          key: ${{ secrets.SERVER_SSH_KEY }}
-          port: 22
-          source: "public/*"
-          target: ${{ secrets.WEB_ROOT }}
-          strip_components: 0
+      # 将编译好的静态文件传输到 IPv6 的服务器
+      - name: Deploy via Native SCP
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
+          SERVER_USER: ${{ secrets.SERVER_USERNAME }}
+          SERVER_HOST: "2406:da18:e66:d766:7483:b8c1:f8ea:c279"
+          TARGET_DIR: ${{ secrets.WEB_ROOT }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          
+          ssh-keyscan -6 -H "$SERVER_HOST" >> ~/.ssh/known_hosts
+          
+          # 原生的 scp 在指定 IPv6 时，目标地址的方括号要加在用户和主机外面，形如 [user@host]:dir
+          scp -v -i ~/.ssh/id_ed25519 -r public/* "[${SERVER_USER}@${SERVER_HOST}]:${TARGET_DIR}"
 
