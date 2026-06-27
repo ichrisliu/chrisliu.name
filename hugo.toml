@@ -1,5 +1,5 @@
 baseURL = 'https://ichris.info/'
-languageCode = 'zh-cn'
+locale = 'zh-cn'
 defaultContentLanguage = 'zh-cn'
 title = 'Code is Poetry'
 theme = 'beautifulhugo'
@@ -23,8 +23,8 @@ pygmentsCodefencesGuessSyntax = true
   gcse = '012197134175958074274:kptvndglwsw'
   [params.author]
     name = 'Chris'
-    email = 'chrislu.name@gmail.com'
-    github = 'ichrislu'
+    email = 'chrisliu.name@gmail.com'
+    github = 'ichrisliu'
 
 [page]
   nextPrevInSectionSortOrder = 'asc'
