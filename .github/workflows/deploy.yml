@@ -35,7 +35,7 @@ jobs:
       - name: Deploy via SSH/SCP
         uses: appleboy/scp-action@v0.1.7
         with:
-          host: "2406:da18:e66:d766:7483:b8c1:f8ea:c279"
+          host: "[2406:da18:e66:d766:7483:b8c1:f8ea:c279]"
           username: ${{ secrets.SERVER_USERNAME }}
           key: ${{ secrets.SERVER_SSH_KEY }}
           port: 22
