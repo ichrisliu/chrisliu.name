@@ -1,7 +1,7 @@
 ---
 title: "python学习"
 date: "2024-03-29"
-lastMod: "2024-03-29"
+lastMod: "2026-03-20"
 categories: ["it"]
 tags: ["python"]
 ---
@@ -90,3 +90,9 @@ IDE：
 
 UTF-8是Unicode的一种实现方案，是一种变长的编码
 最少1个字节（英文和数字），最多4个字节（Emoji），中文用3个字节
+
+Python数学库，基于运行效率的原因，底层很多由C/Fortran实现，Python封装接口供调用
+
+- 矩阵运算库（科学计算）：Numpy
+- 科学计算库：Scipy
+- 数据处理库（数据分析）：Pandas
