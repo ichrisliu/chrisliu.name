@@ -47,5 +47,5 @@ jobs:
           
           tar -czf public.tar.gz -C public .
           scp -6 -i ~/.ssh/id_ed25519 public.tar.gz ${SERVER_USER}@[${SERVER_HOST}]:/tmp/
-          ssh -6 -i ~/.ssh/id_ed25519 ${SERVER_USER}@${SERVER_HOST} "mkdir -p ${TARGET_DIR} && tar -xzf /tmp/public.tar.gz -C ${TARGET_DIR} && rm /tmp/public.tar.gz"
+          ssh -6 -i ~/.ssh/id_ed25519 ${SERVER_USER}@${SERVER_HOST} "rm -fr ${TARGET_DIR} && tar -xzf /tmp/public.tar.gz -C ${TARGET_DIR} && rm /tmp/public.tar.gz"
 
