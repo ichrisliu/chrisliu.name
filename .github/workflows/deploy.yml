@@ -35,8 +35,8 @@ jobs:
       - name: Deploy via Native SCP
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
-          SERVER_USER: ${{ secrets.SERVER_USERNAME }}
-          SERVER_HOST: "2406:da18:e66:d766:7483:b8c1:f8ea:c279"
+          SERVER_USER: ${{ secrets.SERVER_USER }}
+          SERVER_HOST: ${{ secrets.SERVER_HOST }}
           TARGET_DIR: ${{ secrets.WEB_ROOT }}
         run: |
           mkdir -p ~/.ssh
